@@ -47,6 +47,15 @@ defmodule Decimal do
   Additionally, overflow, underflow and clamped may never be signalled.
   """
 
+  use Application
+  def start(_type, _args) do
+    import Supervisor.Spec, warn: false
+    children = []
+
+    opts = [strategy: :one_for_one, name: Decimal.Supervisor]
+    Supervisor.start_link(children, opts)
+  end
+
   import Bitwise
   import Kernel, except: [abs: 1, div: 2, max: 2, min: 2, rem: 1, round: 1]
 
